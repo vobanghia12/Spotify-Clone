@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Figtree } from 'next/font/google';
 import './globals.css';
 import Sidebar from '@/components/Sidebar';
+import SupabaseProvider from '@/providers/SupabaseProvider';
 
 interface appProps {
   children: React.ReactNode;
@@ -18,7 +19,9 @@ const RootLayout: React.FC<appProps> = ({ children }) => {
   return (
     <html lang='en'>
       <body className={font.className}>
-        <Sidebar>{children}</Sidebar>
+        <SupabaseProvider>
+          <Sidebar>{children}</Sidebar>
+        </SupabaseProvider>
       </body>
     </html>
   );
