@@ -3,6 +3,10 @@ import { Figtree } from 'next/font/google';
 import './globals.css';
 import Sidebar from '@/components/Sidebar';
 import SupabaseProvider from '@/providers/SupabaseProvider';
+import UserProvider from '@/providers/UserProvider';
+import ModalProvider from '@/providers/ModalProvider';
+import ToasterProvider from '@/providers/ToasterPorvider';
+import getSongsByUserId from '@/action/getSongByUserId';
 
 interface appProps {
   children: React.ReactNode;
@@ -15,12 +19,17 @@ export const metadata: Metadata = {
   description: 'Listen to music!',
 };
 
-const RootLayout: React.FC<appProps> = ({ children }) => {
+const RootLayout: React.FC<appProps> = async ({ children }) => {
+  const userSongs = await getSongsByUserId();
   return (
     <html lang='en'>
       <body className={font.className}>
+        <ToasterProvider />
         <SupabaseProvider>
-          <Sidebar>{children}</Sidebar>
+          <UserProvider>
+            <ModalProvider />
+            <Sidebar songs={userSongs}>{children}</Sidebar>
+          </UserProvider>
         </SupabaseProvider>
       </body>
     </html>
