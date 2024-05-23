@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/useUser';
 import { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import toast from 'react-hot-toast';
+import useOnPlay from '@/hooks/useOnPlay';
 
 interface LikeButtonProps {
   songId: string;
