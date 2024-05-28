@@ -8,6 +8,7 @@ import ModalProvider from '@/providers/ModalProvider';
 import ToasterProvider from '@/providers/ToasterPorvider';
 import getSongsByUserId from '@/action/getSongByUserId';
 import Player from '@/components/Player';
+import getActiveProductWithPrices from '@/action/getActiveProductWithPrices';
 
 interface appProps {
   children: React.ReactNode;
@@ -22,13 +23,14 @@ export const metadata: Metadata = {
 
 const RootLayout: React.FC<appProps> = async ({ children }) => {
   const userSongs = await getSongsByUserId();
+  const products = await getActiveProductWithPrices();
   return (
     <html lang='en'>
       <body className={font.className}>
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
-            <ModalProvider />
+            <ModalProvider products={products} />
             <Sidebar songs={userSongs}>{children}</Sidebar>
             <Player />
           </UserProvider>
